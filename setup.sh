@@ -78,15 +78,16 @@ fi
 # --- 3. Configure Wine display drivers ----------------------------------------
 step "Configuring display drivers..."
 # X11 driver for NVIDIA GLX (via XWayland)
+# Decorated=N: no titlebar/border. Managed=Y: WM handles focus (keyboard input works).
 env -u DISPLAY WINEPREFIX="$PREFIX" "$WINE" reg add \
     "HKCU\\Software\\Wine\\X11 Driver" /v Decorated /t REG_SZ /d N /f 2>/dev/null
 env -u DISPLAY WINEPREFIX="$PREFIX" "$WINE" reg add \
-    "HKCU\\Software\\Wine\\X11 Driver" /v Managed /t REG_SZ /d N /f 2>/dev/null
+    "HKCU\\Software\\Wine\\X11 Driver" /v Managed /t REG_SZ /d Y /f 2>/dev/null
 # Wayland driver as fallback (Intel/AMD)
 env -u DISPLAY WINEPREFIX="$PREFIX" "$WINE" reg add \
     "HKCU\\Software\\Wine\\Wayland Driver" /v Decorated /t REG_SZ /d N /f 2>/dev/null
 "$WINESERVER" -w 2>/dev/null || true
-echo "  X11 + Wayland drivers: no decorations"
+echo "  X11 + Wayland drivers: no decorations, managed focus"
 
 # --- 4. Install core fonts ---------------------------------------------------
 step "Installing Windows core fonts..."

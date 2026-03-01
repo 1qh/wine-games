@@ -67,7 +67,8 @@ echo "Launching $GAME_EXE..."
 echo "  Prefix:  wine-$NAME"
 echo "  CWD:     $GAME_BIN"
 echo "  Display: $DISPLAY_MODE"
-echo "  GPU:     $GPU_NAME"
+  echo "  GPU:     $GPU_NAME"
+  echo "  Log:     /tmp/wine-$NAME.log"
 
 cd "$GAME_BIN"
 exec env \
@@ -75,4 +76,4 @@ exec env \
     WINEPREFIX="$PREFIX" \
     XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}" \
     WINEDEBUG=-all \
-    "$WINE" "./$GAME_EXE"
+    "$WINE" "./$GAME_EXE" 2>/tmp/wine-$NAME.log
